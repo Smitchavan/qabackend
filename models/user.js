@@ -1,38 +1,38 @@
-const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken')
-require('dotenv').config
-
-
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+require("dotenv").config;
 
 const userSchema = new mongoose.Schema({
-    name: {
+  name: {
     type: String,
     required: true,
     minlength: 3,
-    maxlength: 30    
-    },
-    email: {
+    maxlength: 30,
+  },
+  email: {
     type: String,
     required: true,
     unique: true,
-    },
-    password: {
-      type:String,
+  },
+  password: {
+    type: String,
     required: true,
     minlength: 8,
-    maxlength: 1024    
-    }
-})
+    maxlength: 1024,
+  },
+  accesslevel: {
+    type: String,
+    required: true,
+  },
+});
 
-userSchema.methods.generateAuthToken = function() {
-  const token = jwt.sign({_id: this._id}, process.env.jwtPrivateKey,{expiresIn: '300s'})
-  return token
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign({ _id: this._id }, process.env.jwtPrivateKey, {
+    expiresIn: "300s",
+  });
+  return token;
+};
 
-} 
+const User = mongoose.model("tester", userSchema);
 
-const User = mongoose.model('tester', userSchema)
-
- module.exports = User
-
-
-
+module.exports = User;
