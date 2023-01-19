@@ -23,13 +23,17 @@ router.post("/", async (req, res) => {
   const validpassword = await bcrypt.compare(req.body.password, user.password);
   if (!validpassword) return res.status(404).send("Invalid password");
 
+  const token = user.generateAuthToken();
+
   let responseData = {};
   if (validpassword) {
     responseData.user = req.body.email;
     responseData.msg = "Logged in successfully";
+    responseData.token = token;
   }
 
-  res.status(200).send(responseData);
+  res.header("x-auth-token", token).status(200).send(responseData);
+  // res.status(200).send(responseData);
 });
 
 module.exports = router;
