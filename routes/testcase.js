@@ -41,5 +41,42 @@ router.get("/gettests", async (req, res) => {
     res.status(226).send(obj);
   }
 });
+router.get("/gettestbyid", async (req, res) => {
+  // console.log(req.query);
+  let id = req.query.id;
+  console.log("GET-TEST-BYID-API=====>", id);
+  try {
+    let Gettest = await Testcase.findById(id);
+
+    // console.log(Gettest);
+    res.send(Gettest);
+  } catch (err) {
+    console.log(err.message);
+    let obj = {
+      status: "FAILED",
+      err: err.message,
+    };
+    res.status(226).send(obj);
+  }
+});
+
+router.delete("/deltestbyid", async (req, res) => {
+  // console.log(req.query);
+  let id = req.body.id;
+
+  try {
+    let Gettest = await Testcase.findByIdAndDelete(id);
+
+    // console.log(Gettest);
+    res.send(Gettest);
+  } catch (err) {
+    console.log(err.message);
+    let obj = {
+      status: "FAILED",
+      err: err.message,
+    };
+    res.status(226).send(obj);
+  }
+});
 
 module.exports = router;

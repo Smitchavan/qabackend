@@ -10,6 +10,7 @@ const login = require("./routes/login");
 const forgotPassword = require("./routes/forgotPassword");
 const testcase = require("./routes/testcase");
 const steps = require("./routes/step");
+const testset = require("./routes/testset");
 app.use(cors());
 app.use(express.json());
 app.use("/api/register", register);
@@ -17,6 +18,7 @@ app.use("/api/forgotPassword", forgotPassword);
 app.use("/api/login", login);
 app.use("/api/testcase", testcase);
 app.use("/api/step", steps);
+app.use("/api/testset", testset);
 const port = 5000;
 
 app.listen(port, () => {
