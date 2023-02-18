@@ -7,6 +7,7 @@ router.post("/", async (req, res) => {
     let Test = await new Testcase({
       testname: req.body.testname,
       addsteps: req.body.steps,
+      testinfo: req.body.testinfo,
       status: req.body.status,
       testlevel: req.body.testlevel,
       assigntoproject: req.body.assigntoproject,
@@ -30,7 +31,7 @@ router.get("/gettests", async (req, res) => {
   try {
     let Gettest = await Testcase.find({});
 
-    console.log(Gettest);
+    console.log("[]", Gettest);
     res.send(Gettest);
   } catch (err) {
     console.log(err.message);

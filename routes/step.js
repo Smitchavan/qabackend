@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Step = require("../models/stepModel");
-
+const auth = require("../middleware/check-auth");
 router.post("/", async (req, res) => {
   try {
     let StepRes = await new Step({
@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
     res.status(226).send(obj);
   }
 });
-router.get("/getstep", async (req, res) => {
+router.get("/getstep", auth, async (req, res) => {
   try {
     let Stepres = await Step.find({});
     res.send(Stepres);

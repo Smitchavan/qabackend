@@ -21,6 +21,9 @@ const testSchema = new mongoose.Schema({
   },
   assigntoproject: {
     type: String,
+  },
+  testinfo: {
+    type: String,
     required: true,
   },
   stepArr: {

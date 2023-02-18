@@ -46,12 +46,12 @@ router.post("/inserttestsbyid", async (req, res) => {
   console.log("test-cases====>", req.body[1].testcaseinfo);
   let id = req.body[0].id;
   let data = req.body[1].testcaseinfo;
-  console.log("type", typeof data);
+  console.log("type", typeof data, "WHy am i called");
   try {
     let Result = await TestSet.findById(id);
     Result.testcases.push(data);
     await Result.save();
-    console.log("new", Result);
+    // console.log("new", Result);
     // return Result;
     res.send(Result);
   } catch (err) {
@@ -65,6 +65,7 @@ router.post("/inserttestsbyid", async (req, res) => {
 });
 
 router.get("/gettestsets", async (req, res) => {
+  console.log("hii");
   try {
     let Result = await TestSet.find({});
 
@@ -82,6 +83,7 @@ router.get("/gettestsets", async (req, res) => {
 router.delete("/deltestsetbyid", async (req, res) => {
   console.log(req.body.id);
   let id = req.body.id;
+  console.log(id);
   try {
     let Result = await TestSet.findByIdAndDelete(id);
 
@@ -100,7 +102,7 @@ router.post("/deltestfromid", async (req, res) => {
   // console.log(req.body.data.id);
   let id = req.body.data.testsetId;
   let testid = req.body.data.id;
-  // console.log(testid);
+  console.log("hii", testid, id);
   try {
     let Result = await TestSet.updateOne(
       { _id: id },
@@ -115,6 +117,21 @@ router.post("/deltestfromid", async (req, res) => {
       err: err.message,
     };
     res.status(226).send(obj);
+  }
+});
+
+router.post("/updatewithid", async (req, res) => {
+  let id = req.body.data.id;
+  let data = req.body.data.data;
+  console.log(req.body.data.data);
+  try {
+    let Result = await TestSet.findByIdAndUpdate(id, data);
+    const response = await Result.save();
+    console.log(response);
+    res.send(response);
+  } catch (error) {
+    res.send(error);
+    console.log(error);
   }
 });
 

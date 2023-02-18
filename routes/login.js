@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
+const auth = require("../middleware/check-auth");
 
 const schema = Joi.object({
   email: Joi.string().email({
@@ -34,6 +35,9 @@ router.post("/", async (req, res) => {
 
   res.header("x-auth-token", token).status(200).send(responseData);
   // res.status(200).send(responseData);
+});
+router.get("/userinfo", auth, (req, res) => {
+  // console.log(req);
 });
 
 module.exports = router;
