@@ -102,11 +102,33 @@ router.post("/deltestfromid", async (req, res) => {
   // console.log(req.body.data.id);
   let id = req.body.data.testsetId;
   let testid = req.body.data.id;
-  console.log("hii", testid, id);
+  // console.log("hii", testid, id);
   try {
     let Result = await TestSet.updateOne(
       { _id: id },
       { $pull: { testcases: { _id: testid } } }
+    );
+
+    res.send(Result);
+  } catch (err) {
+    //console.log(err.message);
+    let obj = {
+      status: "FAILED",
+      err: err.message,
+    };
+    res.status(226).send(obj);
+  }
+});
+
+router.post("/delstepfromtestset", async (req, res) => {
+  let id = req.body.data.testsetId;
+  let stepid = req.body.data.id;
+  let testid = req.body.data.testid;
+  try {
+    let Result = await TestSet.updateOne(
+      { _id: id },
+      { $pull: { "testcases.$[i].stepArr": { _id: stepid } } },
+      { arrayFilters: [{ "i._id": testid }] }
     );
 
     res.send(Result);
@@ -130,8 +152,29 @@ router.post("/updatewithid", async (req, res) => {
     console.log(response);
     res.send(response);
   } catch (error) {
-    res.send(error);
-    console.log(error);
+    let obj = {
+      err: "typeerror",
+      error: error,
+    };
+    res.send(obj);
+    console.log("error", error);
+  }
+});
+
+router.get("/searchtestset", async (req, res) => {
+  const { q } = req.query;
+
+  try {
+    const results = await TestSet.find({
+      $or: [
+        { name: { $regex: q, $options: "i" } },
+        { description: { $regex: q, $options: "i" } },
+      ],
+    });
+    res.json(results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
