@@ -65,11 +65,17 @@ router.post("/inserttestsbyid", async (req, res) => {
 });
 
 router.get("/gettestsets", async (req, res) => {
-  console.log("hii");
+  const itemsPerPage = 4;
+  const page = req.query.page || 1;
+  const counter = await TestSet.countDocuments();
+  // console.log("hii");
   try {
-    let Result = await TestSet.find({});
-
-    res.send(Result);
+    // let Result = await TestSet.find({});
+    let Result = await TestSet.find({})
+      .skip((page - 1) * itemsPerPage)
+      .limit(itemsPerPage);
+    let Paginated = { Result, counter };
+    res.send(Paginated);
   } catch (err) {
     //console.log(err.message);
     let obj = {
@@ -167,8 +173,8 @@ router.get("/searchtestset", async (req, res) => {
   try {
     const results = await TestSet.find({
       $or: [
-        { name: { $regex: q, $options: "i" } },
-        { description: { $regex: q, $options: "i" } },
+        { testsetname: { $regex: q, $options: "i" } },
+        { assigntoproject: { $regex: q, $options: "i" } },
       ],
     });
     res.json(results);

@@ -29,11 +29,17 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/gettests", async (req, res) => {
+  const itemsPerPage = 5;
+  const page = req.query.page || 1;
+  const counter = await Testcase.countDocuments();
   try {
-    let Gettest = await Testcase.find({});
-
-    console.log("[]", Gettest);
-    res.send(Gettest);
+    let Gettest = await Testcase.find({})
+      .skip((page - 1) * itemsPerPage)
+      .limit(itemsPerPage);
+    let Result = { Gettest, counter };
+    res.send(Result);
+    // let Gettest = await Testcase.find({});
+    // res.send(Gettest);
   } catch (err) {
     console.log(err.message);
     let obj = {
