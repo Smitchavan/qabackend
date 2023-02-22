@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const Testcase = require("../models/testModel");
-
+const auth = require("../middleware/check-auth");
 router.post("/", async (req, res) => {
   try {
     let Test = await new Testcase({
@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/gettests", async (req, res) => {
+router.get("/gettests", auth, async (req, res) => {
   const itemsPerPage = 5;
   const page = req.query.page || 1;
   const counter = await Testcase.countDocuments();

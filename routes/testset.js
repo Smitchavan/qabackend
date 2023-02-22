@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const auth = require("../middleware/check-auth");
 const TestSet = require("../models/testSetModel");
 
 router.post("/", async (req, res) => {
@@ -65,7 +65,7 @@ router.post("/inserttestsbyid", async (req, res) => {
 });
 
 router.get("/gettestsets", async (req, res) => {
-  const itemsPerPage = 4;
+  const itemsPerPage = 5;
   const page = req.query.page || 1;
   const counter = await TestSet.countDocuments();
   // console.log("hii");

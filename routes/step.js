@@ -21,10 +21,16 @@ router.post("/", async (req, res) => {
   }
 });
 router.get("/getstep", auth, async (req, res) => {
+  const itemsPerPage = 5;
+  const page = req.query.page || 1;
+  const counter = await Step.countDocuments();
   try {
-    let Stepres = await Step.find({});
-    res.send(Stepres);
-    console.log(Stepres);
+    let Stepres = await Step.find({})
+      .skip((page - 1) * itemsPerPage)
+      .limit(itemsPerPage);
+    let Paginated = { Stepres, counter };
+    res.send(Paginated);
+    // console.log(Stepres);
   } catch (error) {
     console.log(error);
   }
