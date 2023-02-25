@@ -31,7 +31,7 @@ userSchema.methods.generateAuthToken = function () {
     { _id: this._id, email: this.email, accesslevel: this.accesslevel },
     process.env.JWT_SECRET,
     {
-      expiresIn: "1800s",
+      expiresIn: "18000s",
     }
   );
   return token;

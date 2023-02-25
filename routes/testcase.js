@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/gettests", auth, async (req, res) => {
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const page = req.query.page || 1;
   const counter = await Testcase.countDocuments();
   try {

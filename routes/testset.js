@@ -46,7 +46,7 @@ router.post("/inserttestsbyid", async (req, res) => {
   console.log("test-cases====>", req.body[1].testcaseinfo);
   let id = req.body[0].id;
   let data = req.body[1].testcaseinfo;
-  console.log("type", typeof data, "WHy am i called");
+  // console.log("type", typeof data, "WHy am i called");
   try {
     let Result = await TestSet.findById(id);
     Result.testcases.push(data);
@@ -65,7 +65,7 @@ router.post("/inserttestsbyid", async (req, res) => {
 });
 
 router.get("/gettestsets", async (req, res) => {
-  const itemsPerPage = 5;
+  const itemsPerPage = 8;
   const page = req.query.page || 1;
   const counter = await TestSet.countDocuments();
   // console.log("hii");
@@ -107,12 +107,13 @@ router.delete("/deltestsetbyid", async (req, res) => {
 router.post("/deltestfromid", async (req, res) => {
   // console.log(req.body.data.id);
   let id = req.body.data.testsetId;
-  let testid = req.body.data.id;
+  let timestamp = req.body.data.id;
   // console.log("hii", testid, id);
   try {
     let Result = await TestSet.updateOne(
       { _id: id },
-      { $pull: { testcases: { _id: testid } } }
+      { $pull: { testcases: { timestamp: timestamp } } },
+      { multi: false }
     );
 
     res.send(Result);
