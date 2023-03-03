@@ -7,6 +7,7 @@ const TestRun = require("../models/runModel");
 router.post("/", async (req, res) => {
   let { data } = req.body[0];
   //   console.log(data);
+
   try {
     const testrun = await new TestRun({
       testRun: data,
