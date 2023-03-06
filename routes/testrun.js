@@ -33,6 +33,17 @@ router.get("/getruns", async (req, res) => {
     console.log(err);
   }
 });
+router.get("/getrunbyid", async (req, res) => {
+  let { runid } = req.query;
+  // console.log(req.query.runid);
+  try {
+    const result = await TestRun.findById(runid);
+    res.send(result);
+  } catch (error) {
+    res.send(error.message);
+    console.log(err);
+  }
+});
 router.delete("/deleteruns", async (req, res) => {
   try {
     let result = await TestRun.deleteOne({ _id: req.body.id });
@@ -43,10 +54,11 @@ router.delete("/deleteruns", async (req, res) => {
 });
 
 router.post("/updatesteps", async (req, res) => {
-  let { data } = req.body;
+  let { data, runid } = req.body.data;
 
   // console.log(data._id);
   // console.log(data);
+  // console.log(runid);
 
   try {
     // let Result = await TestRun.updateOne({
@@ -54,9 +66,15 @@ router.post("/updatesteps", async (req, res) => {
 
     // });
     // Example testcase _id to update
+
+    // console.log(runid);
+
     const update = { $set: { "testRun.testcases.$": data } };
     const Result = await TestRun.updateOne(
-      { "testRun.testcases._id": data._id },
+      {
+        _id: runid,
+        "testRun.testcases._id": data._id,
+      },
       update
     );
 
