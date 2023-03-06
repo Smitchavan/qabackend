@@ -77,21 +77,40 @@ router.post("/updatesteps", async (req, res) => {
   let { data, runid } = req.body.data;
   console.log(data);
   console.log(runid);
-  // try {
+  try {
+    const update = { $set: { testRun: data } };
+    const Result = await TestRun.updateOne(
+      {
+        _id: runid,
+      },
+      update
+    );
 
-  //   const update = { $set: { "testRun.testcases.$": data } };
-  //   const Result = await TestRun.updateOne(
-  //     {
-  //       _id: runid,
-  //       "testRun.testcases._id": data._id,
-  //     },
-  //     update
-  //   );
-
-  //   res.send(Result);
-  // } catch (error) {
-  //   console.log(error.message);
-  // }
+    res.send(Result);
+  } catch (error) {
+    console.log(error.message);
+  }
 });
 
 module.exports = router;
+
+// router.post("/updatesteps", async (req, res) => {
+//   let { data, runid } = req.body.data;
+//   console.log(data);
+//   console.log(runid);
+//   // try {
+
+//     const update = { $set: { "testRun.$": data } };
+//     const Result = await TestRun.updateOne(
+//       {
+//         _id: runid,
+//         "testRun._id": data._id,
+//       },
+//       update
+//     );
+
+//     res.send(Result);
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// });
