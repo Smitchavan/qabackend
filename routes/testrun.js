@@ -6,13 +6,11 @@ const TestRun = require("../models/runModel");
 // POST a new test run
 router.post("/", async (req, res) => {
   let { data } = req.body[0];
-  //   console.log(data);
+  console.log(data);
 
   try {
     const testrun = await new TestRun({
       testRun: data,
-      finalDuration: 5,
-      finalStatus: "",
     });
     const TestRunn = await testrun.save();
     //console.log(Testy);

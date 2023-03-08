@@ -50,10 +50,6 @@ const mongoose = require("mongoose");
 
 const testRunSchema = new mongoose.Schema({
   testRun: { type: Object },
-  finalDuration: { type: Number },
-  finalStatus: {
-    type: String,
-  },
 });
 
 const testRun = mongoose.model("testrun", testRunSchema);

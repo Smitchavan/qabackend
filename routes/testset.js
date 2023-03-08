@@ -8,7 +8,6 @@ router.post("/", async (req, res) => {
     let Testset = await new TestSet({
       testsetname: req.body.testsetname,
       testcases: req.body.testcases,
-      assigntoproject: req.body.assigntoproject,
     });
 
     const TestSett = await Testset.save();
@@ -112,7 +111,7 @@ router.post("/deltestfromid", async (req, res) => {
   try {
     let Result = await TestSet.updateOne(
       { _id: id },
-      { $pull: { testcases: { timestamp: timestamp } } },
+      { $pull: { testcases: { Timeid: timestamp } } },
       { multi: false }
     );
 

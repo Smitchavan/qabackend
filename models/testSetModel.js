@@ -11,9 +11,6 @@ const testSetSchema = new mongoose.Schema({
   testcases: {
     type: Array,
   },
-  assigntoproject: {
-    type: String,
-  },
 });
 
 const TestSet = mongoose.model("testset", testSetSchema);

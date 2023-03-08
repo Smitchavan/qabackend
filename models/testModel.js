@@ -8,9 +8,7 @@ const testSchema = new mongoose.Schema({
     minlength: 3,
     maxlength: 30,
   },
-  addsteps: {
-    type: Array,
-  },
+
   status: {
     type: String,
     required: true,
@@ -19,9 +17,7 @@ const testSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  assigntoproject: {
-    type: String,
-  },
+
   testinfo: {
     type: String,
     required: true,

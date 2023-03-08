@@ -7,11 +7,9 @@ router.post("/", async (req, res) => {
   try {
     let Test = await new Testcase({
       testname: req.body.testname,
-      addsteps: req.body.steps,
       testinfo: req.body.testinfo,
       status: req.body.status,
       testlevel: req.body.testlevel,
-      assigntoproject: req.body.assigntoproject,
       stepArr: req.body.stepArr,
     });
 
