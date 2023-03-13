@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 
 // const testrunSchema = new mongoose.Schema({
 //     testsetname: {
@@ -47,10 +48,59 @@ const mongoose = require("mongoose");
 //     required: true
 // }
 // });
-
 const testRunSchema = new mongoose.Schema({
-  testRun: { type: Object },
+  testsetname: { type: String, unique: true },
+  testcases: [
+    {
+      testname: {
+        type: String,
+        unique: true,
+      },
+      status: {
+        type: String,
+      },
+      testlevel: {
+        type: String,
+      },
+      testinfo: {
+        type: String,
+      },
+      stepArr: [
+        {
+          steps: {
+            type: String,
+          },
+          result: {
+            status: {
+              type: String,
+            },
+            description: {
+              type: String,
+            },
+            checktime: {
+              type: String,
+            },
+          },
+        },
+      ],
+      Timeid: { type: String },
+      counttesterTime: [
+        {
+          time: { type: String },
+          type: { type: String },
+        },
+      ],
+      duration: { type: Number },
+    },
+  ],
+  runStartTime: { type: String },
+  runEndtime: { type: String },
+  finalDuration: { type: Number },
+  finalStatus: { type: String },
 });
 
 const testRun = mongoose.model("testrun", testRunSchema);
 module.exports = testRun;
+
+// const testRun = mongoose.model("testruns", testRunSchema);
+// module.exports = testRun;
